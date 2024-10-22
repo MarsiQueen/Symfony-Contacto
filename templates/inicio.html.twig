@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Página de Inicio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+        }
+        .btn-success {
+            background-color: #28a745;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<h1>Contactos</h1>
+<h2>Bienvenido a la web de contactos.</h2>
+<p>Página de inicio</p>
+
+{# Si el usuario está logueado, muestra el botón de logout y un enlace a la lista de contactos #}
+{% if app.user %}
+    <p>Bienvenido, {{ app.user.username }}!</p>
+    <a href="{{ path('contacto_list') }}" class="btn btn-primary">Ver Contactos</a>
+    <form action="{{ path('app_logout') }}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+{% else %}
+    {# Si el usuario no está logueado, muestra los botones de login y register #}
+    <a href="{{ path('login') }}" class="btn btn-primary">Login</a>
+    <a href="{{ path('app_register') }}" class="btn btn-success">Register</a>
+{% endif %}
+</body>
+</html>

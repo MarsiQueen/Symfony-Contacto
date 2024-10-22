@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Contactos</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .contact-list {
+            list-style: none;
+            padding: 0;
+        }
+        .contact-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .contact-item a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .contact-item form {
+            margin: 0;
+        }
+        .btn {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Lista de Contactos</h1>
+    <div class="text-right mb-3">
+        <a href="{{ path('nuevo') }}" class="btn btn-success">Añadir Contacto</a>
+    </div>
+    <ul class="contact-list">
+        {% for contacto in contactos %}
+            <li class="contact-item">
+                <div>
+                    <a href="{{ path('ficha_contacto', { codigo: contacto.id }) }}">{{ contacto.nombre }}</a>
+                    <a href="{{ path('editar', { codigo: contacto.id }) }}" class="btn btn-warning btn-sm">Editar</a>
+                </div>
+                <form action="{{ path('eliminar_contacto', { id: contacto.id }) }}" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contacto.id) }}">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </li>
+        {% else %}
+            <li class="contact-item">
+                <p>No hay contactos disponibles.</p>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Enlace a Bootstrap JS (opcional) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
